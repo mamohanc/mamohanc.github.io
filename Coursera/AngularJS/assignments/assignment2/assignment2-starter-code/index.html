@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Shopping List Check Off</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="app.js"></script>
+
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <style>
+      .emptyMessage {
+        font-weight: bold;
+        color: red;
+        font-size: 1.2em;
+      }
+      li {
+        margin-bottom: 7px;
+        font-size: 1.2em;
+      }
+      li > button {
+        margin-left: 6px;
+      }
+      button > span {
+        color: green;
+      }
+    </style>
+  </head>
+<body ng-app='ShoppingListApp'>
+  <div class="container">
+  <h1>Shopping List Check Off</h1>
+
+  <div class="row" >
+
+    <!-- To Buy List -->
+      <div  ng-controller='ShoppingListAddController as itemAdder'>
+        <input type="text" ng-model="itemAdder.itemName" placeholder="item name">
+        <input type="text" ng-model="itemAdder.itemQuantity" placeholder="quantity">
+        <button ng-click="itemAdder.addItem()">Add Item To Shopping List</button>
+
+      <br><br>
+      <div  class="col-md-6" >
+        <h2>To Buy:</h2>
+
+        <ol>
+          <li ng-repeat='item in itemAdder.items'>
+            Buy {{ item.quantity }} of {{ item.name }}
+              <button class="btn btn-default" ng-click="itemAdder.processBuy($index)"><span class="glyphicon glyphicon-ok"></span> Buy </button>
+              <button class="btn btn-default" ng-click="itemAdder.removeItem($index)"><span class="glyphicon glyphicon-ok"></span> Remove </a>
+            </li>
+        </ol>
+
+             <div class="emptyMessage" ng-show='itemAdder.itemsBought.length > 0  && itemAdder.items.length == 0'>
+               Everything is bought!
+             </div>
+      </div>
+
+      <div class="col-md-6" ng-controller='ShoppingListBoughtController as itemsB'>
+       <h2>Already Bought:</h2>
+       <div>
+       <ul>
+         <li ng-repeat='item1 in itemsB.itemsBought'>
+              Bought {{ item1.quantity }} {{ item1.name }}
+             <button class="btn btn-default" ng-click='itemsB.processRemove($index)'><span class="glyphicon glyphicon-ok"></span>Yet to Buy</button>
+           </li>
+        </ul>
+      </div>
+        <div   ng-show='itemsB.itemsBought.length == 0' class="emptyMessage"> Nothing bought yet.</div>
+      </div>
+</div>
+    <!-- Already Bought List -->
+
+  </div>
+</div>
+
+</body>
+</html>
