@@ -1,0 +1,9 @@
+<!--<h2 ng-if='na.fItems.length > 0'> Title: {{ na.myTitle }}</h2> -->
+<h2> Title: {{ na.myTitle }}</h2>
+<ol>
+  <li ng-repeat="item in list.fItems">
+    {{ item.quantity }} of {{ item.name }}
+    <button ng-click="list.onRemove({index: $index});">Remove Item</button>
+  </li>
+</ol>
+<div class="error" ng-if="false">WARNING! WARNING! ERROR DETECTED!</div>
